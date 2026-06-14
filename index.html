@@ -1,0 +1,387 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ru"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;тело и автоматизм · kintsugi&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&amp;family=Lora:ital,wght@0,400;0,500;1,400&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>tailwind.config = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>theme: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>extend: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>colors: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'k-ivory': '#FDFCFB',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'k-sand': '#F5F2EE',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'k-gold': '#C5A059',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'k-brown': '#4A3B30',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'k-mist': '#9E948B'</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>fontFamily: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>serif: ['Lora', 'serif'],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>sans: ['Inter', 'sans-serif'],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #FDFCFB;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #4A3B30;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Lora', serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scroll-behavior: smooth;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 700px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-left: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-right: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 300px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 400px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.signal-card {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.signal-card:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-4px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #F5F2EE;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.fade-in {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: fadeIn 1.2s ease-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>from { opacity: 0; transform: translateY(10px); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>to { opacity: 1; transform: translateY(0); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link::after {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>content: '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bottom: -2px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 1px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #C5A059;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: width 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link:hover::after {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.tab-content {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.tab-content.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="antialiased leading-relaxed"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Навигация --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;nav class="fixed top-0 w-full bg-k-ivory/80 backdrop-blur-md z-50 border-b border-k-gold/10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center text-[10px] tracking-[0.2em] uppercase font-sans font-light"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex items-center space-x-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="text-k-gold"&gt;неделя 1&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="text-k-mist"&gt;/&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span&gt;искусство замечать&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="hidden md:flex space-x-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#philosophy" class="nav-link"&gt;философия&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#mechanics" class="nav-link"&gt;механика&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#signals" class="nav-link"&gt;сигналы&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#practice" class="nav-link"&gt;практика&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/nav&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="pt-24 pb-20"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Секция 1: Философия (Page 1-2) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="philosophy" class="max-w-4xl mx-auto px-6 py-20 text-center fade-in"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="text-[11px] font-sans uppercase tracking-[0.3em] text-k-gold mb-6 block"&gt;виктория голдберг · kintsugi*&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-3xl md:text-5xl font-serif font-light mb-12 leading-tight"&gt;тело и автоматизм&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-8 text-lg md:text-xl font-serif italic text-k-brown/80 max-w-2xl mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p&gt;тело не ошибается.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p&gt;симптом — это не поломка. это адаптация. это сигнал, который ждет, когда его услышат.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-20 flex justify-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="w-px h-24 bg-gradient-to-b from-k-gold/40 to-transparent"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Секция 2: Механика реакции (Page 3-4) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="mechanics" class="bg-k-sand/30 py-24"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="max-w-5xl mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid md:grid-cols-2 gap-16 items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h2 class="text-2xl font-serif mb-6"&gt;дыхание меняется раньше мысли&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm font-sans text-k-mist uppercase tracking-widest mb-8"&gt;физиология всегда опережает сознание&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="space-y-6 text-k-brown/90 leading-relaxed"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p&gt;автоматизм — это фон. они не бросаются в глаза, они просто повторяются. именно поэтому их так важно научиться замечать.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="border-l border-k-gold/30 pl-6 py-2 space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="text-sm"&gt;&lt;span class="text-k-gold font-sans mr-2"&gt;A. Триггер:&lt;/span&gt; чтение сообщений, ожидание, контакт с оценкой.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="text-sm font-medium"&gt;&lt;span class="text-k-gold font-sans mr-2"&gt;B. Тело:&lt;/span&gt; мгновенная реакция дыхания (сбой, задержка).&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="text-sm italic"&gt;&lt;span class="text-k-gold font-sans mr-2"&gt;C. Когниция:&lt;/span&gt; появление мысли или эмоции с задержкой.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-white p-8 rounded-2xl shadow-sm border border-k-gold/5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;canvas id="reactionChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-center text-[10px] font-sans text-k-mist mt-4 uppercase tracking-tighter"&gt;график задержки когнитивной реакции (мс)&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Секция 3: 5 Сигналов (Page 5) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="signals" class="py-24 max-w-5xl mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center mb-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-serif mb-4"&gt;5 сигналов для отслеживания&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-k-mist text-sm font-sans italic"&gt;на что мы направляем внимание в первую очередь&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-1 md:grid-cols-5 gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Дыхание --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="signal-card p-6 border border-k-gold/10 rounded-xl flex flex-col items-center text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-10 h-10 mb-4 rounded-full border border-k-gold/20 flex items-center justify-center text-k-gold font-sans text-sm"&gt;1&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-serif mb-2"&gt;дыхание&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-[11px] font-sans text-k-mist uppercase leading-tight"&gt;грудная клетка, задержка или сбой&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Плечи --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="signal-card p-6 border border-k-gold/10 rounded-xl flex flex-col items-center text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-10 h-10 mb-4 rounded-full border border-k-gold/20 flex items-center justify-center text-k-gold font-sans text-sm"&gt;2&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-serif mb-2"&gt;плечи&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-[11px] font-sans text-k-mist uppercase leading-tight"&gt;напряжение, подняты к ушам&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Челюсть --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="signal-card p-6 border border-k-gold/10 rounded-xl flex flex-col items-center text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-10 h-10 mb-4 rounded-full border border-k-gold/20 flex items-center justify-center text-k-gold font-sans text-sm"&gt;3&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-serif mb-2"&gt;челюсть&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-[11px] font-sans text-k-mist uppercase leading-tight"&gt;сжатие, стиснутые зубы&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Горло --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="signal-card p-6 border border-k-gold/10 rounded-xl flex flex-col items-center text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-10 h-10 mb-4 rounded-full border border-k-gold/20 flex items-center justify-center text-k-gold font-sans text-sm"&gt;4&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-serif mb-2"&gt;горло&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-[11px] font-sans text-k-mist uppercase leading-tight"&gt;спазм или ком&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Усталость --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="signal-card p-6 border border-k-gold/10 rounded-xl flex flex-col items-center text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-10 h-10 mb-4 rounded-full border border-k-gold/20 flex items-center justify-center text-k-gold font-sans text-sm"&gt;5&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-serif mb-2"&gt;усталость&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-[11px] font-sans text-k-mist uppercase leading-tight"&gt;общий контур тела, тяжесть&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Секция 4: Подход KINTSUGI (Page 6) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section class="bg-k-brown text-k-ivory py-24"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="max-w-4xl mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="text-center mb-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 class="text-2xl md:text-3xl font-serif mb-4"&gt;фиксация — это уже действие&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-k-gold/60 text-sm font-sans uppercase tracking-[0.2em]"&gt;переход от исправления к наблюдению&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid md:grid-cols-2 gap-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-6 opacity-60"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4 class="font-sans text-[10px] uppercase tracking-widest border-b border-k-ivory/20 pb-2"&gt;привычный паттерн&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;ul class="space-y-4 font-serif italic"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;li&gt;— пытаться объяснить&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;li&gt;— пытаться исправить&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;li&gt;— оценивать&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4 class="font-sans text-[10px] uppercase tracking-widest border-b border-k-gold/40 pb-2 text-k-gold"&gt;подход KINTSUGI&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;ul class="space-y-4 font-serif"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;li&gt;— просто заметить&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;li&gt;— назвать происходящее&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;li&gt;— разрешить этому быть&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="mt-16 text-center text-lg font-serif text-k-ivory/80 italic border-t border-k-ivory/10 pt-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>не нужно объяснять или исправлять. назвать то, что происходит — достаточно.</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Секция 5: Практика и инструменты (Page 7-9) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="practice" class="py-24 max-w-5xl mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid md:grid-cols-2 gap-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Дневник --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-k-sand/20 p-10 rounded-3xl border border-k-gold/5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-xl font-serif mb-6 italic"&gt;дневник состояний&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-sm text-k-brown/70 mb-8"&gt;инструмент для синхронизации внутреннего фона с внешними триггерами.&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center space-x-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex-1 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="block text-[10px] font-sans uppercase tracking-widest text-k-mist mb-2"&gt;внутри&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="h-20 bg-white rounded-lg border border-k-gold/10 flex items-center justify-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-xs italic"&gt;эмоции и состояния&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-k-gold"&gt;↔&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex-1 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="block text-[10px] font-sans uppercase tracking-widest text-k-mist mb-2"&gt;снаружи&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="h-20 bg-white rounded-lg border border-k-gold/10 flex items-center justify-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-xs italic"&gt;события и люди&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Рефлексия --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-xl font-serif mb-6 italic"&gt;вопросы для рефлексии&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-k-brown/40 text-[10px] font-sans uppercase mb-1"&gt;вопрос 01&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-lg font-serif group-hover:text-k-gold transition-colors"&gt;почему я сейчас реагирую именно так?&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-k-brown/40 text-[10px] font-sans uppercase mb-1"&gt;вопрос 02&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-lg font-serif group-hover:text-k-gold transition-colors"&gt;с каким опытом связано мое состояние — с тем ли, что происходит сейчас?&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-k-brown/40 text-[10px] font-sans uppercase mb-1"&gt;вопрос 03&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-lg font-serif group-hover:text-k-gold transition-colors"&gt;кого из прошлого мне напоминает этот человек?&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Практика недели --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-20 bg-k-ivory p-8 md:p-12 border border-k-gold/20 rounded-3xl text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="text-[11px] font-sans uppercase tracking-widest text-k-gold mb-4 block"&gt;практика недели&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 class="text-2xl font-serif mb-4"&gt;аудио-наблюдение&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex flex-wrap justify-center gap-8 mt-8 text-[11px] font-sans uppercase text-k-mist"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span&gt;фокус: дыхание&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-k-gold"&gt;•&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span&gt;условие: без подготовки&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-k-gold"&gt;•&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span&gt;формат: слушать в любой момент дня&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Финал (Page 10) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section class="py-32 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="max-w-2xl mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-4xl md:text-5xl font-serif font-light mb-8"&gt;первый шаг — &lt;br&gt;&lt;span class="italic text-k-gold"&gt;заметить.&lt;/span&gt;&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="w-12 h-px bg-k-gold/40 mx-auto my-12"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-xs font-sans tracking-[0.4em] uppercase text-k-mist opacity-50"&gt;kintsugi* · неделя 1 · завершено&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer class="py-12 border-t border-k-gold/10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-[10px] font-sans text-k-mist uppercase tracking-widest"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span&gt;© виктория голдберг · рефлексия.fm&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="mt-4 md:mt-0 italic"&gt;искусство ценить трещины&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Инициализация графика реакции (Physiology vs Cognition)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ctx = document.getElementById('reactionChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const reactionChart = new Chart(ctx, {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>type: 'line',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labels: ['0', '100', '200', '300', '400', '500', '600'],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>datasets: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>label: 'Физиологический отклик',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>data: [0, 85, 95, 70, 40, 20, 10],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderColor: '#C5A059',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>backgroundColor: 'rgba(197, 160, 89, 0.05)',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderWidth: 2,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>tension: 0.4,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>fill: true,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>pointRadius: 0</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>label: 'Когнитивное осознание',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>data: [0, 5, 15, 35, 75, 90, 85],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderColor: '#4A3B30',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderWidth: 1.5,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderDash: [5, 5],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>tension: 0.4,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>pointRadius: 0</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>]</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>legend: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>display: true,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>position: 'bottom',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>labels: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>font: { size: 10, family: 'Inter' },</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>color: '#9E948B',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>usePointStyle: true,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>padding: 20</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>tooltip: { enabled: false }</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>x: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>grid: { display: false },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>ticks: { color: '#9E948B', font: { size: 9 } }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>y: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>display: false,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>beginAtZero: true</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Плавное появление элементов при скролле</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const observerOptions = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>threshold: 0.1</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const observer = new IntersectionObserver((entries) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>entries.forEach(entry =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (entry.isIntersecting) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>entry.target.classList.add('fade-in');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>observer.unobserve(entry.target);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}, observerOptions);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.querySelectorAll('section').forEach(section =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>observer.observe(section);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
