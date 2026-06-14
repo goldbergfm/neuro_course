@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kintsugi* & рефлексия.fm — пользователь нейрографики</title>
+    <style>
+        :root {
+            --bg-vanilla: #f1eada;
+            --text-mahogany: #584738;
+            --accent-gold: #c9a96e;
+            --card-bg: rgba(88, 71, 56, 0.04);
+            --card-border: rgba(88, 71, 56, 0.1);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            text-transform: lowercase;
+        }
+        body {
+            background-color: var(--bg-vanilla);
+            color: var(--text-mahogany);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+        header {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px 40px 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .meta-title {
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.3;
+            color: var(--text-mahogany);
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            max-width: 600px;
+        }
+        .nav-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+        .nav-btn {
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: var(--text-mahogany);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .nav-btn.active {
+            background-color: var(--text-mahogany);
+            color: var(--bg-vanilla);
+            border-color: var(--text-mahogany);
+        }
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .module-section {
+            display: none;
+        }
+        .module-section.active {
+            display: block;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: var(--text-mahogany);
+            border-left: 2px solid var(--accent-gold);
+            padding-left: 12px;
+        }
+        p {
+            margin-bottom: 16px;
+            opacity: 0.9;
+            font-size: 1.05rem;
+        }
+        .canvas-container {
+            background: white;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .canvas-label {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            font-size: 0.8rem;
+            background: rgba(241, 234, 218, 0.8);
+            padding: 4px 8px;
+            border-radius: 4px;
+            z-index: 10;
+        }
+        svg {
+            width: 100%;
+            height: 250px;
+            display: block;
+        }
+        .intersection-node {
+            cursor: pointer;
+        }
+        .rounded-corner {
+            fill: none;
+            stroke: var(--text-mahogany);
+            stroke-width: 0;
+            transition: stroke-width 0.2s ease;
+        }
+        .intersection-node.fixed .rounded-corner {
+            stroke-width: 4px;
+        }
+        .intersection-node.fixed .marker-dot {
+            fill: var(--accent-gold);
+            r: 6;
+        }
+        .control-panel {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .action-btn {
+            background: white;
+            border: 1px solid var(--accent-gold);
+            color: var(--text-mahogany);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        .action-btn:hover {
+            background: var(--bg-vanilla);
+        }
+        .steps-tracker {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .step-row {
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 16px;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+        }
+        .step-row.active {
+            border-color: var(--accent-gold);
+            background: white;
+        }
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+        }
+        .step-status {
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+        }
+        .step-body {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--card-border);
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+        .step-row.active .step-body {
+            display: block;
+        }
+        .somatic-note {
+            background: rgba(201, 169, 110, 0.1);
+            border-left: 3px solid var(--accent-gold);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+            font-size: 0.95rem;
+        }
+        .timer-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 16px 0;
+        }
+        .timer-display {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-mahogany);
+        }
+        footer {
+            max-width: 800px;
+            margin: 40px auto 0 auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.6;
+            border-top: 1px solid var(--card-border);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="meta-title">kintsugi* & рефлексия.fm</div>
+        <h1>стратегическая архитектура интерактивного веб-курса «пользователь нейрографики»</h1>
+        <div class="subtitle">автономная вводная база и пре-реквизит перед живыми эфирами. бережное наблюдение, структура базового алгоритма и отсутствие эзотерических маркеров.</div>
+    </header>
+    <div class="nav-container">
+        <button class="nav-btn active" onclick="switchModule(1, event)">модуль 1: природа линии и контакта</button>
+        <button class="nav-btn" onclick="switchModule(2, event)">модуль 2: базовый алгоритм (асо)</button>
+    </div>
+    <main>
+        <section id="module1" class="module-section active">
+            <div class="card">
+                <h2>концепт нейролинии</h2>
+                <p>нейрографическая линия — это линия, которая идет туда, где мы не ожидаем ее увидеть, и не повторяет себя на каждом участке своего движения.</p>
+                <p>она противоположна нашим привычным автоматизмам и шаблонным синусоидальным паттернам, которыми ум пытается защититься от неопределенности.</p>
+                <div class="canvas-container">
+                    <div class="canvas-label">сравнение: шаблонный паттерн vs бионическая линия</div>
+                    <svg id="lineSvg" viewBox="0 0 800 250">
+                        <path d="M 50,80 Q 100,20 150,80 T 250,80 T 350,80 T 450,80 T 550,80 T 650,80 T 750,80" fill="none" stroke="#584738" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.4"/>
+                        <path id="neuroPath" d="M 50,170 C 120,150 140,210 220,180 C 300,150 320,110 410,140 C 490,170 530,190 610,150 C 690,110 700,180 750,160" fill="none" stroke="#584738" stroke-width="3"/>
+                    </svg>
+                </div>
+                <div class="control-panel">
+                    <button class="action-btn" onclick="generateNeuroLine()">изменить траекторию линии</button>
+                </div>
+                <div class="somatic-note">
+                    <strong>соматический маркер:</strong> когда линия идет в неожиданную сторону, ум теряет контроль. заметь, как в этот момент меняется твое дыхание. происходит ли секундная задержка?
+                </div>
+            </div>
+            <div class="card">
+                <h2>принцип сопряжения (округления)</h2>
+                <p>каждое пересечение линий на листе — это математическая и психологическая модель конфликта в подсознании. округление углов трансформирует психическое напряжение и создает новые нейронные связи.</p>
+                <p>кликни на точки пересечения ниже, чтобы выполнить сопряжение (округление) острых углов конфликта.</p>
+                <div class="canvas-container">
+                    <div class="canvas-label">интерактивная модель сопряжения (нажми на пересечения)</div>
+                    <svg viewBox="0 0 800 250" style="background: #faf7f2;">
+                        <path d="M 150,50 L 650,200" fill="none" stroke="#584738" stroke-width="2.5"/>
+                        <path d="M 200,200 L 600,50" fill="none" stroke="#584738" stroke-width="2.5"/>
+                        <path d="M 400,20 L 420,230" fill="none" stroke="#584738" stroke-width="2.5"/>
+                        <g class="intersection-node" id="node1" onclick="fixIntersection('node1')">
+                            <path class="rounded-corner" d="M 400,105 A 15,15 0 0,1 420,115"/>
+                            <path class="rounded-corner" d="M 425,125 A 15,15 0 0,1 410,140"/>
+                            <circle cx="414" cy="122" r="10" fill="transparent"/>
+                            <circle class="marker-dot" cx="414" cy="122" r="4" fill="#c9a96e" opacity="0.7"/>
+                        </g>
+                        <path d="M 100,125 L 700,125" fill="none" stroke="#584738" stroke-width="2"/>
+                        <g class="intersection-node" id="node2" onclick="fixIntersection('node2')">
+                            <path class="rounded-corner" d="M 290,105 A 12,12 0 0,1 310,115"/>
+                            <circle cx="300" cy="112" r="10" fill="transparent"/>
+                            <circle class="marker-dot" cx="300" cy="112" r="4" fill="#c9a96e" opacity="0.7"/>
+                        </g>
+                        <g class="intersection-node" id="node3" onclick="fixIntersection('node3')">
+                            <path class="rounded-corner" d="M 510,125 A 12,12 0 0,1 530,135"/>
+                            <circle cx="520" cy="132" r="10" fill="transparent"/>
+                            <circle class="marker-dot" cx="520" cy="132" r="4" fill="#c9a96e" opacity="0.7"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="control-panel">
+                    <button class="action-btn" onclick="resetIntersections()">сбросить округления</button>
+                </div>
+            </div>
+        </section>
+        <section id="module2" class="module-section">
+            <div class="card">
+                <h2>пошаговый трек базового алгоритма снятия ограничений (асо)</h2>
+                <p>переложение классического метода павла пискарёва на язык осознанности и отслеживания зазора между телесным сигналом и автоматической мыслью.</p>
+                <div class="steps-tracker">
+                    <div class="step-row active" id="step1" onclick="activateStep('step1')">
+                        <div class="step-header">
+                            <span>1. выброс (актуализация темы)</span>
+                            <span class="step-status">фокус на напряжении</span>
+                        </div>
+                        <div class="step-body">
+                            <p>сформируй тему или запрос, который вызывает максимальный внутренний дискомфорт. вынеси всю композицию этого напряжения на лист бумаги резким движением маркера ровно за 2 секунды.</p>
+                            <div class="timer-box">
+                                <button class="action-btn" id="timerBtn" onclick="startVybrosTimer(event)">запустить таймер выброса (2 сек)</button>
+                                <div class="timer-display" id="timerVal">2.00</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-row" id="step2" onclick="activateStep('step2')">
+                        <div class="step-header">
+                            <span>2. сопряжение (округление конфликтов)</span>
+                            <span class="step-status">интеграция и связь</span>
+                        </div>
+                        <div class="step-body">
+                            <p>последовательно свяжи и скругли все пересечения линий, которые образовались во время выброса. это этап перехода от деструктивного хаоса к внутренней гармонии.</p>
+                            <div class="somatic-note">
+                                <strong>внимание в тело:</strong> на этом шаге чаще всего поднимается сопротивление. отследи 5 ключевых зон: сжатие челюсти, поднятые плечи, спазм в горле, задержка грудной клетки или фоновая тяжесть. просто заметь это, не пытаясь исправить.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-row" id="step3" onclick="activateStep('step3')">
+                        <div class="step-header">
+                            <span>3. integration (фигура и фон)</span>
+                            <span class="step-status">растворение границ</span>
+                        </div>
+                        <div class="step-body">
+                            <p><strong>фигура и фон:</strong> продли линии своего выброса в окружающее пространство листа. раствори свои жесткие личные границы в контексте внешней среды, убирая разделение на «я» и «мир».</p>
+                            <p><strong>архетипирование:</strong> объединяй мелкие фрагменты и ячейки рисунка большими потоковыми цветовыми пятнами, формируя новые крупные смыслы.</p>
+                        </div>
+                    </div>
+                    <div class="step-row" id="step4" onclick="activateStep('step4')">
+                        <div class="step-header">
+                            <span>4. lines поля и фиксация</span>
+                            <span class="step-status">выделение главного инсайта</span>
+                        </div>
+                        <div class="step-body">
+                            <p>проведи через весь лист несколько мощных, толстых линий поля — они символизируют опору на масштабные поддерживающие силы и внешние ресурсы.</p>
+                            <p>выдели (зафиксируй) на листе самую важную фигуру, которая проявилась в процессе работы. это графическое воплощение твоего главного инсайта и возвращения субъектности.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        проект kintsugi* / рефлексия.fm · интегративная психология и психосоматика · 2026
+    </footer>
+    <script>
+        function switchModule(moduleNum, event) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.module-section').forEach(sec => sec.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('module' + moduleNum).classList.add('active');
+        }
+        function generateNeuroLine() {
+            const path = document.getElementById('neuroPath');
+            let d = "M 50," + (150 + Math.random() * 40);
+            let currentX = 50;
+            while(currentX < 730) {
+                let nextX = currentX + 150 + Math.random() * 50;
+                let cp1x = currentX + 50;
+                let cp1y = 100 + Math.random() * 120;
+                let cp2x = nextX - 50;
+                let cp2y = 100 + Math.random() * 120;
+                let nextY = 120 + Math.random() * 80;
+                d += " C " + cp1x + "," + cp1y + " " + cp2x + "," + cp2y + " " + nextX + "," + nextY;
+                currentX = nextX;
+            }
+            path.setAttribute('d', d);
+        }
+        function fixIntersection(id) {
+            const node = document.getElementById(id);
+            node.classList.add('fixed');
+        }
+        function resetIntersections() {
+            document.querySelectorAll('.intersection-node').forEach(node => {
+                node.classList.remove('fixed');
+            });
+        }
+        function activateStep(id) {
+            document.querySelectorAll('.step-row').forEach(row => row.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+        let timerInterval;
+        function startVybrosTimer(event) {
+            event.stopPropagation();
+            const btn = document.getElementById('timerBtn');
+            const display = document.getElementById('timerVal');
+            if (timerInterval) clearInterval(timerInterval);
+            let timeLeft = 2.00;
+            btn.disabled = true;
+            btn.innerText = "идет выброс напряжения...";
+            timerInterval = setInterval(function() {
+                timeLeft -= 0.05;
+                if (timeLeft <= 0) {
+                    timeLeft = 0;
+                    clearInterval(timerInterval);
+                    btn.innerText = "выброс завершен";
+                    display.style.color = "#c9a96e";
+                }
+                display.innerText = timeLeft.toFixed(2);
+            }, 50);
+        }
+    </script>
+</body>
+</html>
