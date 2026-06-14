@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>тело и автоматизм · kintsugi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'k-ivory': '#FDFCFB',
+                        'k-sand': '#F5F2EE',
+                        'k-gold': '#C5A059',
+                        'k-brown': '#4A3B30',
+                        'k-mist': '#9E948B'
+                    },
+                    fontFamily: {
+                        serif: ['Lora', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FDFCFB;
+            color: #4A3B30;
+            font-family: 'Lora', serif;
+            scroll-behavior: smooth;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        .signal-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .signal-card:hover {
+            transform: translateY(-4px);
+            background-color: #F5F2EE;
+        }
+        .fade-in {
+            animation: fadeIn 1.2s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav-link {
+            position: relative;
+            cursor: pointer;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #C5A059;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="antialiased leading-relaxed">
+
+    <!-- Навигация -->
+    <nav class="fixed top-0 w-full bg-k-ivory/80 backdrop-blur-md z-50 border-b border-k-gold/10">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center text-[10px] tracking-[0.2em] uppercase font-sans font-light">
+            <div class="flex items-center space-x-4">
+                <span class="text-k-gold">неделя 1</span>
+                <span class="text-k-mist">/</span>
+                <span>искусство замечать</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#philosophy" class="nav-link">философия</a>
+                <a href="#mechanics" class="nav-link">механика</a>
+                <a href="#signals" class="nav-link">сигналы</a>
+                <a href="#practice" class="nav-link">практика</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-20">
+        <!-- Секция 1: Философия (Page 1-2) -->
+        <section id="philosophy" class="max-w-4xl mx-auto px-6 py-20 text-center fade-in">
+            <span class="text-[11px] font-sans uppercase tracking-[0.3em] text-k-gold mb-6 block">виктория голдберг · kintsugi*</span>
+            <h1 class="text-3xl md:text-5xl font-serif font-light mb-12 leading-tight">тело и автоматизм</h1>
+            <div class="space-y-8 text-lg md:text-xl font-serif italic text-k-brown/80 max-w-2xl mx-auto">
+                <p>тело не ошибается.</p>
+                <p>симптом — это не поломка. это адаптация. это сигнал, который ждет, когда его услышат.</p>
+            </div>
+            <div class="mt-20 flex justify-center">
+                <div class="w-px h-24 bg-gradient-to-b from-k-gold/40 to-transparent"></div>
+            </div>
+        </section>
+
+        <!-- Секция 2: Механика реакции (Page 3-4) -->
+        <section id="mechanics" class="bg-k-sand/30 py-24">
+            <div class="max-w-5xl mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h2 class="text-2xl font-serif mb-6">дыхание меняется раньше мысли</h2>
+                        <p class="text-sm font-sans text-k-mist uppercase tracking-widest mb-8">физиология всегда опережает сознание</p>
+                        <div class="space-y-6 text-k-brown/90 leading-relaxed">
+                            <p>автоматизм — это фон. они не бросаются в глаза, они просто повторяются. именно поэтому их так важно научиться замечать.</p>
+                            <div class="border-l border-k-gold/30 pl-6 py-2 space-y-4">
+                                <p class="text-sm"><span class="text-k-gold font-sans mr-2">A. Триггер:</span> чтение сообщений, ожидание, контакт с оценкой.</p>
+                                <p class="text-sm font-medium"><span class="text-k-gold font-sans mr-2">B. Тело:</span> мгновенная реакция дыхания (сбой, задержка).</p>
+                                <p class="text-sm italic"><span class="text-k-gold font-sans mr-2">C. Когниция:</span> появление мысли или эмоции с задержкой.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-k-gold/5">
+                        <div class="chart-container">
+                            <canvas id="reactionChart"></canvas>
+                        </div>
+                        <p class="text-center text-[10px] font-sans text-k-mist mt-4 uppercase tracking-tighter">график задержки когнитивной реакции (мс)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция 3: 5 Сигналов (Page 5) -->
+        <section id="signals" class="py-24 max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-serif mb-4">5 сигналов для отслеживания</h2>
+                <p class="text-k-mist text-sm font-sans italic">на что мы направляем внимание в первую очередь</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <!-- Дыхание -->
+                <div class="signal-card p-6 border border-k-gold/10 rounded-xl flex flex-col items-center text-center">
+                    <div class="w-10 h-10 mb-4 rounded-full border border-k-gold/20 flex items-center justify-center text-k-gold font-sans text-sm">1</div>
+                    <h3 class="font-serif mb-2">дыхание</h3>
+                    <p class="text-[11px] font-sans text-k-mist uppercase leading-tight">грудная клетка, задержка или сбой</p>
+                </div>
+                <!-- Плечи -->
+                <div class="signal-card p-6 border border-k-gold/10 rounded-xl flex flex-col items-center text-center">
+                    <div class="w-10 h-10 mb-4 rounded-full border border-k-gold/20 flex items-center justify-center text-k-gold font-sans text-sm">2</div>
+                    <h3 class="font-serif mb-2">плечи</h3>
+                    <p class="text-[11px] font-sans text-k-mist uppercase leading-tight">напряжение, подняты к ушам</p>
+                </div>
+                <!-- Челюсть -->
+                <div class="signal-card p-6 border border-k-gold/10 rounded-xl flex flex-col items-center text-center">
+                    <div class="w-10 h-10 mb-4 rounded-full border border-k-gold/20 flex items-center justify-center text-k-gold font-sans text-sm">3</div>
+                    <h3 class="font-serif mb-2">челюсть</h3>
+                    <p class="text-[11px] font-sans text-k-mist uppercase leading-tight">сжатие, стиснутые зубы</p>
+                </div>
+                <!-- Горло -->
+                <div class="signal-card p-6 border border-k-gold/10 rounded-xl flex flex-col items-center text-center">
+                    <div class="w-10 h-10 mb-4 rounded-full border border-k-gold/20 flex items-center justify-center text-k-gold font-sans text-sm">4</div>
+                    <h3 class="font-serif mb-2">горло</h3>
+                    <p class="text-[11px] font-sans text-k-mist uppercase leading-tight">спазм или ком</p>
+                </div>
+                <!-- Усталость -->
+                <div class="signal-card p-6 border border-k-gold/10 rounded-xl flex flex-col items-center text-center">
+                    <div class="w-10 h-10 mb-4 rounded-full border border-k-gold/20 flex items-center justify-center text-k-gold font-sans text-sm">5</div>
+                    <h3 class="font-serif mb-2">усталость</h3>
+                    <p class="text-[11px] font-sans text-k-mist uppercase leading-tight">общий контур тела, тяжесть</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция 4: Подход KINTSUGI (Page 6) -->
+        <section class="bg-k-brown text-k-ivory py-24">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-2xl md:text-3xl font-serif mb-4">фиксация — это уже действие</h2>
+                    <p class="text-k-gold/60 text-sm font-sans uppercase tracking-[0.2em]">переход от исправления к наблюдению</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="space-y-6 opacity-60">
+                        <h4 class="font-sans text-[10px] uppercase tracking-widest border-b border-k-ivory/20 pb-2">привычный паттерн</h4>
+                        <ul class="space-y-4 font-serif italic">
+                            <li>— пытаться объяснить</li>
+                            <li>— пытаться исправить</li>
+                            <li>— оценивать</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-6">
+                        <h4 class="font-sans text-[10px] uppercase tracking-widest border-b border-k-gold/40 pb-2 text-k-gold">подход KINTSUGI</h4>
+                        <ul class="space-y-4 font-serif">
+                            <li>— просто заметить</li>
+                            <li>— назвать происходящее</li>
+                            <li>— разрешить этому быть</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-16 text-center text-lg font-serif text-k-ivory/80 italic border-t border-k-ivory/10 pt-12">
+                    не нужно объяснять или исправлять. назвать то, что происходит — достаточно.
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция 5: Практика и инструменты (Page 7-9) -->
+        <section id="practice" class="py-24 max-w-5xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16">
+                <!-- Дневник -->
+                <div class="bg-k-sand/20 p-10 rounded-3xl border border-k-gold/5">
+                    <h3 class="text-xl font-serif mb-6 italic">дневник состояний</h3>
+                    <p class="text-sm text-k-brown/70 mb-8">инструмент для синхронизации внутреннего фона с внешними триггерами.</p>
+                    
+                    <div class="flex items-center space-x-8">
+                        <div class="flex-1 text-center">
+                            <span class="block text-[10px] font-sans uppercase tracking-widest text-k-mist mb-2">внутри</span>
+                            <div class="h-20 bg-white rounded-lg border border-k-gold/10 flex items-center justify-center p-4">
+                                <span class="text-xs italic">эмоции и состояния</span>
+                            </div>
+                        </div>
+                        <div class="text-k-gold">↔</div>
+                        <div class="flex-1 text-center">
+                            <span class="block text-[10px] font-sans uppercase tracking-widest text-k-mist mb-2">снаружи</span>
+                            <div class="h-20 bg-white rounded-lg border border-k-gold/10 flex items-center justify-center p-4">
+                                <span class="text-xs italic">события и люди</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рефлексия -->
+                <div>
+                    <h3 class="text-xl font-serif mb-6 italic">вопросы для рефлексии</h3>
+                    <div class="space-y-8">
+                        <div class="group">
+                            <p class="text-k-brown/40 text-[10px] font-sans uppercase mb-1">вопрос 01</p>
+                            <p class="text-lg font-serif group-hover:text-k-gold transition-colors">почему я сейчас реагирую именно так?</p>
+                        </div>
+                        <div class="group">
+                            <p class="text-k-brown/40 text-[10px] font-sans uppercase mb-1">вопрос 02</p>
+                            <p class="text-lg font-serif group-hover:text-k-gold transition-colors">с каким опытом связано мое состояние — с тем ли, что происходит сейчас?</p>
+                        </div>
+                        <div class="group">
+                            <p class="text-k-brown/40 text-[10px] font-sans uppercase mb-1">вопрос 03</p>
+                            <p class="text-lg font-serif group-hover:text-k-gold transition-colors">кого из прошлого мне напоминает этот человек?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Практика недели -->
+            <div class="mt-20 bg-k-ivory p-8 md:p-12 border border-k-gold/20 rounded-3xl text-center">
+                <span class="text-[11px] font-sans uppercase tracking-widest text-k-gold mb-4 block">практика недели</span>
+                <h3 class="text-2xl font-serif mb-4">аудио-наблюдение</h3>
+                <div class="flex flex-wrap justify-center gap-8 mt-8 text-[11px] font-sans uppercase text-k-mist">
+                    <span>фокус: дыхание</span>
+                    <span class="text-k-gold">•</span>
+                    <span>условие: без подготовки</span>
+                    <span class="text-k-gold">•</span>
+                    <span>формат: слушать в любой момент дня</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Финал (Page 10) -->
+        <section class="py-32 text-center">
+            <div class="max-w-2xl mx-auto px-6">
+                <h2 class="text-4xl md:text-5xl font-serif font-light mb-8">первый шаг — <br><span class="italic text-k-gold">заметить.</span></h2>
+                <div class="w-12 h-px bg-k-gold/40 mx-auto my-12"></div>
+                <p class="text-xs font-sans tracking-[0.4em] uppercase text-k-mist opacity-50">kintsugi* · неделя 1 · завершено</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-12 border-t border-k-gold/10">
+        <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-[10px] font-sans text-k-mist uppercase tracking-widest">
+            <span>© виктория голдберг · рефлексия.fm</span>
+            <span class="mt-4 md:mt-0 italic">искусство ценить трещины</span>
+        </div>
+    </footer>
+
+    <script>
+        // Инициализация графика реакции (Physiology vs Cognition)
+        const ctx = document.getElementById('reactionChart').getContext('2d');
+        const reactionChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['0', '100', '200', '300', '400', '500', '600'],
+                datasets: [
+                    {
+                        label: 'Физиологический отклик',
+                        data: [0, 85, 95, 70, 40, 20, 10],
+                        borderColor: '#C5A059',
+                        backgroundColor: 'rgba(197, 160, 89, 0.05)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 0
+                    },
+                    {
+                        label: 'Когнитивное осознание',
+                        data: [0, 5, 15, 35, 75, 90, 85],
+                        borderColor: '#4A3B30',
+                        borderWidth: 1.5,
+                        borderDash: [5, 5],
+                        tension: 0.4,
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            font: { size: 10, family: 'Inter' },
+                            color: '#9E948B',
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    },
+                    tooltip: { enabled: false }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#9E948B', font: { size: 9 } }
+                    },
+                    y: {
+                        display: false,
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Плавное появление элементов при скролле
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
